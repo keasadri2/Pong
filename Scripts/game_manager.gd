@@ -1,7 +1,5 @@
 extends Node
 
-signal game_over
-
 var playerScore = 0
 var cpuScore = -1
 var isGameOver
@@ -38,7 +36,6 @@ func restart():
 
 func Game_Over():
 	isGameOver = true
-	emit_signal("game_over")
 	winner.visible = true
 	pressR.visible = true
 	if (cpuScore > playerScore):

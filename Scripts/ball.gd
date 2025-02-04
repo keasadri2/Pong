@@ -69,9 +69,3 @@ func _on_left_goal_body_entered(_body: Node2D) -> void:
 	game_manager.cpuGoal()
 	if game_manager.isGameOver == false:
 		_ready()
-
-func _on_game_manager_game_over() -> void:
-	print("GameOver Checked/Received")
-	position = Vector2.ZERO
-	velocity = Vector2.ZERO
-	speed = 0
