@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://df28cgjq16i68"]
+
+[ext_resource type="PackedScene" uid="uid://wi8pcqe40yad" path="res://Scenes/player_paddle.tscn" id="1_fgiph"]
+
+[node name="Game" type="Node2D"]
+
+[node name="PlayerPaddle" parent="." instance=ExtResource("1_fgiph")]
+position = Vector2(69, 115)
+speed = 100

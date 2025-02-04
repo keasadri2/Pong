@@ -1,0 +1,155 @@
+[gd_scene load_steps=15 format=3 uid="uid://b3c3daqa5ku0e"]
+
+[ext_resource type="PackedScene" uid="uid://wi8pcqe40yad" path="res://Scenes/player_paddle.tscn" id="1_fgiph"]
+[ext_resource type="PackedScene" uid="uid://d0m1wy5pvyoq7" path="res://Scenes/ai_paddle.tscn" id="2_4texo"]
+[ext_resource type="FontFile" uid="uid://c1x67h5mjan0i" path="res://OtherAssets/Fonts/prstartk.ttf" id="2_l7n7i"]
+[ext_resource type="PackedScene" uid="uid://cac58eq5i0x4d" path="res://Scenes/ball.tscn" id="3_7p866"]
+[ext_resource type="Texture2D" uid="uid://dtteglvw4xx8a" path="res://Sprites/PGBG1.png" id="4_tdxvo"]
+[ext_resource type="Texture2D" uid="uid://cdp00225dbf1c" path="res://Sprites/GoalZone1.png" id="5_w1cuy"]
+[ext_resource type="Script" path="res://Scripts/pgbg_1.gd" id="6_s642f"]
+[ext_resource type="Script" path="res://Scripts/goal_zone_1.gd" id="8_iyr4i"]
+[ext_resource type="Script" path="res://Scripts/game_manager.gd" id="8_jxghb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tonew"]
+size = Vector2(11, 216)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dqj6s"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y27fv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tcai1"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wjkw0"]
+
+[node name="Game" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_jxghb")
+
+[node name="playerScore" type="Label" parent="GameManager"]
+z_index = 10
+offset_left = -30.0
+offset_top = -95.0
+offset_right = -14.0
+offset_bottom = -79.0
+theme_override_fonts/font = ExtResource("2_l7n7i")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cpuScore" type="Label" parent="GameManager"]
+z_index = 10
+offset_left = 16.0
+offset_top = -95.0
+offset_right = 32.0
+offset_bottom = -79.0
+theme_override_fonts/font = ExtResource("2_l7n7i")
+text = "0"
+
+[node name="Winner" type="Label" parent="GameManager"]
+visible = false
+z_index = 10
+layout_direction = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -679.0
+offset_top = -372.0
+offset_right = -474.0
+offset_bottom = -352.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_l7n7i")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PressR" type="Label" parent="GameManager"]
+visible = false
+z_index = 10
+layout_direction = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -679.5
+offset_top = -311.0
+offset_right = -471.5
+offset_bottom = -291.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_l7n7i")
+theme_override_font_sizes/font_size = 8
+text = "Press R to Restart Anytime"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ball" parent="." instance=ExtResource("3_7p866")]
+
+[node name="PlayerPaddle" parent="." instance=ExtResource("1_fgiph")]
+z_index = 2
+texture_filter = 1
+position = Vector2(-135, 0)
+
+[node name="aiPaddle" parent="." instance=ExtResource("2_4texo")]
+position = Vector2(135, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Right Goal" type="Area2D" parent="Walls"]
+position = Vector2(200, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right Goal"]
+shape = SubResource("RectangleShape2D_tonew")
+
+[node name="Floor" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 108)
+physics_material_override = SubResource("PhysicsMaterial_dqj6s")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls/Floor"]
+shape = SubResource("WorldBoundaryShape2D_y27fv")
+
+[node name="Ceiling" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -108)
+physics_material_override = SubResource("PhysicsMaterial_tcai1")
+
+[node name="Top" type="CollisionShape2D" parent="Walls/Ceiling"]
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_wjkw0")
+
+[node name="Left Goal" type="Area2D" parent="Walls"]
+position = Vector2(-200, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left Goal"]
+shape = SubResource("RectangleShape2D_tonew")
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Pgbg1" type="Sprite2D" parent="Backgrounds"]
+z_index = -35
+texture = ExtResource("4_tdxvo")
+script = ExtResource("6_s642f")
+
+[node name="Pgbg1" type="Sprite2D" parent="Backgrounds/Pgbg1"]
+position = Vector2(0, -192)
+texture = ExtResource("4_tdxvo")
+
+[node name="GoalZone1" type="Sprite2D" parent="Backgrounds"]
+z_index = -20
+texture = ExtResource("5_w1cuy")
+script = ExtResource("8_iyr4i")
+
+[node name="GoalZone1" type="Sprite2D" parent="Backgrounds/GoalZone1"]
+position = Vector2(0, 192)
+texture = ExtResource("5_w1cuy")
+
+[connection signal="body_entered" from="Walls/Right Goal" to="ball" method="_on_right_goal_body_entered"]
+[connection signal="body_entered" from="Walls/Left Goal" to="ball" method="_on_left_goal_body_entered"]
